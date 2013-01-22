@@ -13,7 +13,7 @@ public class EmotivHandler : MonoBehaviour {
 	private Profile profile;
 	private EmoState cogState = null;
 	
-	public Dictionary<EdkDll.EE_DataChannel_t, double[]> data;
+	private Dictionary<EdkDll.EE_DataChannel_t, double[]> data;
 	
 	public static EmotivHandler Instance
 	{
