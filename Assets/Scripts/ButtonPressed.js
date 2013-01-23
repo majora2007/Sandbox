@@ -23,6 +23,9 @@ function OnCollisionEnter(hit : Collision) {
 	if (hit.gameObject.tag == "CognitivObject") {
 		// Handle button pressed
 		
+		var door : GameObject = GameObject.Find("door");
+		yield WaitForSeconds(1);
+		door.animation.Play("door_open");
 		
 		
 		

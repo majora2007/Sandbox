@@ -18,7 +18,7 @@ public class Lift : MonoBehaviour {
 			if ( emoState != null && emoState.CognitivGetCurrentAction() == EdkDll.EE_CognitivAction_t.COG_LIFT)
 			{
 				// Handle lift
-				float liftAmount = emoState.CognitivGetCurrentActionPower() * 0.01f;
+				float liftAmount = emoState.CognitivGetCurrentActionPower() * 0.1f;
 				
 				transform.Translate(new Vector3(0.0f, transform.position.y + liftAmount, 0.0f));
 				
