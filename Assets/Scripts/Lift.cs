@@ -3,7 +3,10 @@ using Emotiv;
 using System.Collections;
 
 public class Lift : MonoBehaviour {
-
+	
+	public float incomingPower = 0.0f;
+	private static float modifier = 0.1f;
+	
 	// Use this for initialization
 	void Start () {
 	
@@ -25,7 +28,9 @@ public class Lift : MonoBehaviour {
 			} 
 		} else {
 			if (Input.GetKeyUp("r")) {
-				transform.Translate(new Vector3(0.0f, transform.position.y + 0.1f, 0.0f));
+				
+				float liftAmount = incomingPower * modifier;
+				transform.Translate(new Vector3(0.0f, transform.position.y + liftAmount * Time.deltaTime, 0.0f));
 			}
 		}
 		

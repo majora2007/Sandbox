@@ -2,6 +2,8 @@
 
 var animationRoot : GameObject;
 
+private var buttonDown : boolean = false;
+
 function Start () {
 
 }
@@ -16,8 +18,7 @@ function OnCollisionEnter(hit : Collision) {
 	
 	if (hit) {
 		animationRoot.animation.Play("button_down");
-	} else {
-		animationRoot.animation.Play("button_up");
+		buttonDown = true;
 	}
 	
 	if (hit.gameObject.tag == "CognitivObject") {
@@ -27,7 +28,18 @@ function OnCollisionEnter(hit : Collision) {
 		yield WaitForSeconds(1);
 		door.animation.Play("door_open");
 		
-		
-		
 	}
+}
+
+// While button is pressed in down state, have light emit from button
+function OnCollisionStay(hit : Collision) {
+	buttonDown = true;
+	
+	// TODO: Light emit code goes here
+}
+
+function OnCollisionExit(hit : Collision) {
+	buttonDown = false;
+	
+	animationRoot.animation.Play("button_up");
 }

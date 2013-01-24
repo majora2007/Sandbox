@@ -3,7 +3,7 @@ using Emotiv;
 using System.Collections;
 using System.Collections.Generic;
 
-
+//[AddComponentMenu("Camera-Control/Mouse Look")]
 public class EmotivHandler : MonoBehaviour {
 	
 	private static EmotivHandler instance;
@@ -14,6 +14,7 @@ public class EmotivHandler : MonoBehaviour {
 	private EmoState cogState = null;
 	
 	private Dictionary<EdkDll.EE_DataChannel_t, double[]> data;
+	
 	
 	public static EmotivHandler Instance
 	{
@@ -82,8 +83,12 @@ public class EmotivHandler : MonoBehaviour {
 		engine = null;
 	}
 	
-	public Dictionary<EdkDll.EE_DataChannel_t, double[]> getData() {
+	public Dictionary<EdkDll.EE_DataChannel_t, double[]> getRawData() {
 		return data;
+	}
+	
+	public double[] getDataChannel(EdkDll.EE_DataChannel_t channel) {
+		return data[channel];
 	}
 	
 	public bool isConnected() {
@@ -126,7 +131,7 @@ public class EmotivHandler : MonoBehaviour {
 		cogState = args.emoState;
 		EmoState emoState = args.emoState;
 	
-		Debug.Log("User has lower face expression : " + emoState.CognitivGetCurrentAction().ToString() + " of strength " + emoState.CognitivGetCurrentActionPower().ToString() ); 		
+		Debug.Log("User has cognitive action : " + emoState.CognitivGetCurrentAction().ToString() + " of strength " + emoState.CognitivGetCurrentActionPower().ToString() ); 		
 	}
 	
 	public EmoState getCognitiveState() {

@@ -4,53 +4,64 @@ using System.Collections;
 
 public class Disappear : MonoBehaviour {
 	
-	private bool disappear = false;
+	
 	public float sensitivity = 0.03f;
 	
+	private static float modifier = 0.1f;
 	
-	// Use this for initialization
-	void Start () {
-		
-	}
+	private bool disappear = false;
+	private float currentTime;
 	
-	// Update is called once per frame
+
 	void Update () {
 		
 		if (!EmotivHandler.Instance.isConnected()) return;
 		
+		if (disappear) return;
+		
+		/*if (disappear) {
+			if (currentTime <= Time.time) {
+				Debug.Log("Times up!");
+				if (transform.renderer.material.color.a < 1.0f) {
+					modulateAlpha(10.0f);
+					disappear = false;
+				}
+				
+			}
+		} else {*/
+			EmoState emoState = EmotivHandler.Instance.getCognitiveState();
+			if (emoState == null) return;
 			
-		EmoState emoState = EmotivHandler.Instance.getCognitiveState();
-		if (emoState == null) return;
+			if (!disappear && emoState.CognitivGetCurrentAction() == EdkDll.EE_CognitivAction_t.COG_DISAPPEAR)
+			{
+				modulateAlpha(emoState.CognitivGetCurrentActionPower());
+			} 
+			
+			if (transform.renderer.material.color.a <= 0.0f) {
+				disappear = true;
+				transform.collider.enabled = false;
+				
+				// Start a 1 sec time until alpha is faded back to original state
+				currentTime = Time.time + 1.0f;
+			} else {
+				disappear = false;
+				transform.collider.enabled = true;
+			}
+		//}
+			
 		
-		if (!disappear && emoState.CognitivGetCurrentAction() == EdkDll.EE_CognitivAction_t.COG_DISAPPEAR)
-		{
-			modulateAlpha(emoState);
-		} 
-		
-		if (transform.renderer.material.color.a <= 0.0f) {
-			disappear = true;
-			transform.collider.enabled = false;
-		} else {
-			disappear = false;
-			transform.collider.enabled = true;
-		}
 		
 	}
 	
-	void modulateAlpha(EmoState emoState) {
+	void modulateAlpha(float amount) {
 		Color invisiColor = transform.renderer.material.color;
 		
-		float valueToBeLerped = emoState.CognitivGetCurrentActionPower();
-		if (valueToBeLerped < 1) {
-			valueToBeLerped += Time.deltaTime * sensitivity;
-		} else if (valueToBeLerped > 1) {
-			valueToBeLerped -= Time.deltaTime * sensitivity;
-		}
+		float valueToBeLerped = amount * modifier;
 		Debug.Log("Value to be Lerped: " + valueToBeLerped);
-		float decrementAmt = Mathf.Lerp(255.0f, 0.0f, valueToBeLerped) * 0.01f;
-		invisiColor.a -= decrementAmt;
-		//invisiColor.a = decrementAmt;
-		Debug.Log ("Decrement Amount: " + decrementAmt + "  Alpha: " + invisiColor.a);
+		
+		float decrementAmt = Mathf.Lerp(1.0f, 0.0f, valueToBeLerped);
+		
+		invisiColor.a -= decrementAmt * Time.deltaTime;
 		transform.renderer.material.color = invisiColor;
 	}
 }
