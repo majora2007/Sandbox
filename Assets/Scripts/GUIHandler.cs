@@ -29,8 +29,8 @@ public class GUIHandler : MonoBehaviour {
 		
 		GUI.Box(new Rect(Screen.width - 210, 0, 210, 20), "Selected Object:");
 		
-		if (Selector.selectedObject != null) {
-			GUI.Label(new Rect(Screen.width - 35, 0, 60, 20), Selector.selectedObject.name);
+		if (GameState.Instance.getSelectedObject() != null) {
+			GUI.Label(new Rect(Screen.width - 35, 0, 60, 20), GameState.Instance.getSelectedObject().name);
 		} else {
 			GUI.Label(new Rect(Screen.width - 35, 0, 60, 20), "none");
 		}

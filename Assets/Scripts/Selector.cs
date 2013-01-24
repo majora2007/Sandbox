@@ -4,11 +4,14 @@ using System.Collections;
 //[RequireComponent(typeof(Halo))]
 public class Selector : MonoBehaviour {
 	
+	public Material highlightMaterial;
+	
 	private RaycastHit hit = new RaycastHit();
 	private Ray lookAtRay = new Ray();
-	
-	public static GameObject selectedObject;
 	private GameObject prevSelected;
+	private Material prevMaterial;
+	private Material[] prevMaterials;
+
 
 	// Use this for initialization
 	void Start () {
@@ -20,24 +23,29 @@ public class Selector : MonoBehaviour {
 		
 		lookAtRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 		
-		if (Physics.Raycast(lookAtRay, out hit, 10.0f ) && Input.GetMouseButtonDown(0)) {
+		if (Physics.Raycast(lookAtRay, out hit, 100.0f ) && Input.GetMouseButtonDown(0)) {
 			if (hit.collider.gameObject.tag == "CognitivObject") {
-				prevSelected = selectedObject;
-				selectedObject = hit.collider.gameObject;
-				Debug.Log ("I selected " + selectedObject.name);
+				GameObject selectedObject = hit.collider.gameObject;
+
+				
+				if (prevSelected == null ) { // On first run
+					GameState.Instance.setSelectedObject(selectedObject);
+					prevSelected = selectedObject;
+				} else if (prevSelected != selectedObject)
+				{
+					GameState.Instance.setSelectedObject(selectedObject);
+					prevSelected.renderer.materials = prevMaterials;
+					prevSelected = selectedObject;
+				}
+				
+
+				prevMaterials = selectedObject.renderer.materials;
+				
+				Material[] selectedMaterials = new Material[selectedObject.renderer.materials.Length + 1];
+				selectedObject.renderer.materials.CopyTo(selectedMaterials, 0);
+				selectedMaterials[selectedMaterials.Length - 1] = highlightMaterial;
+				selectedObject.renderer.materials = selectedMaterials;
 			}
 		}
-		
-		/*if (selectedObject != null && prevSelected != null) {
-			if (!prevSelected.Equals(selectedObject)) {
-				(prevSelected.GetComponent("Halo") as Behaviour).enabled = false;
-				(selectedObject.GetComponent("Halo") as Behaviour).enabled = true;
-			} else {
-				(selectedObject.GetComponent("Halo") as Behaviour).enabled = true;
-			}
-		}*/
-		
-		
-		
 	}
 }

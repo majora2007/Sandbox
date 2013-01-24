@@ -18,11 +18,11 @@ public class GameState {
 		{
 			if (instance == null) {
 				
-				lock (_lock) {
-					if (instance == null) {
+				//lock (_lock) {
+					//if (instance == null) {
 						instance = new GameState();
-					}
-				}
+					//}
+				//}
 			}
 			
 			return instance;

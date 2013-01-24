@@ -20,17 +20,23 @@ public class Lift : MonoBehaviour {
 		
 			if ( emoState != null && emoState.CognitivGetCurrentAction() == EdkDll.EE_CognitivAction_t.COG_LIFT)
 			{
-				// Handle lift
-				float liftAmount = emoState.CognitivGetCurrentActionPower() * 0.1f;
+				GameObject gObj = GameState.Instance.getSelectedObject();
 				
-				transform.Translate(new Vector3(0.0f, transform.position.y + liftAmount * Time.deltaTime, 0.0f));
+				if (gObj != null) {
+					float liftAmount = emoState.CognitivGetCurrentActionPower() * 0.1f;
+					gObj.transform.Translate(new Vector3(0.0f, transform.position.y + liftAmount * Time.deltaTime, 0.0f));
+				}
 				
 			} 
 		} else {
-			if (Input.GetKeyUp("r")) {
+			if (Input.GetKeyUp("l")) {
 				
-				float liftAmount = incomingPower * modifier;
-				transform.Translate(new Vector3(0.0f, transform.position.y + liftAmount * Time.deltaTime, 0.0f));
+				GameObject gObj = GameState.Instance.getSelectedObject();
+				
+				if (gObj != null) {
+					float liftAmount = incomingPower * modifier;
+					gObj.transform.Translate(new Vector3(0.0f, transform.position.y + liftAmount * Time.deltaTime, 0.0f));
+				}
 			}
 		}
 	}

@@ -30,8 +30,11 @@ public class CognitivPush : MonoBehaviour {
 				
 				float pushAmount = incomingPower * modifier;
 				Ray lookAtRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+				GameObject gObj = GameState.Instance.getSelectedObject();
+				if (gObj != null) {
+					gObj.rigidbody.AddForce(lookAtRay.direction * pushAmount, ForceMode.Impulse);
+				}
 				
-				rigidbody.AddForce(lookAtRay.direction * pushAmount, ForceMode.Impulse);
 			}
 		}
 	
