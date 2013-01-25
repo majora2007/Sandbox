@@ -11,7 +11,7 @@ public class Selector : MonoBehaviour {
 	private GameObject prevSelected;
 	private Material prevMaterial;
 	private Material[] prevMaterials;
-
+	public bool highlightEffect = false;
 
 	// Use this for initialization
 	void Start () {
@@ -34,17 +34,20 @@ public class Selector : MonoBehaviour {
 				} else if (prevSelected != selectedObject)
 				{
 					GameState.Instance.setSelectedObject(selectedObject);
-					prevSelected.renderer.materials = prevMaterials;
+					if (highlightEffect) {
+						prevSelected.renderer.materials = prevMaterials;
+					}
 					prevSelected = selectedObject;
 				}
 				
-
-				prevMaterials = selectedObject.renderer.materials;
-				
-				Material[] selectedMaterials = new Material[selectedObject.renderer.materials.Length + 1];
-				selectedObject.renderer.materials.CopyTo(selectedMaterials, 0);
-				selectedMaterials[selectedMaterials.Length - 1] = highlightMaterial;
-				selectedObject.renderer.materials = selectedMaterials;
+				if (highlightEffect) {
+					prevMaterials = selectedObject.renderer.materials;
+					
+					Material[] selectedMaterials = new Material[selectedObject.renderer.materials.Length + 1];
+					selectedObject.renderer.materials.CopyTo(selectedMaterials, 0);
+					selectedMaterials[selectedMaterials.Length - 1] = highlightMaterial;
+					selectedObject.renderer.materials = selectedMaterials;
+				}
 			}
 		}
 	}

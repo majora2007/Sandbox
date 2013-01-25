@@ -2,11 +2,10 @@ using UnityEngine;
 using Emotiv;
 using System.Collections;
 
-public class CognitivPush : MonoBehaviour {
+public class CognitivLeft : MonoBehaviour {
 	
 	public float incomingPower = 0.0f;
 	public float modifier = 0.1f;
-	
 	
 	// Use this for initialization
 	void Start () {
@@ -21,13 +20,14 @@ public class CognitivPush : MonoBehaviour {
 			if ( emoState != null && emoState.CognitivGetCurrentAction() == EdkDll.EE_CognitivAction_t.COG_PUSH)
 			{
 				// Handle lift
-				float pushAmount = emoState.CognitivGetCurrentActionPower() * 0.1f;
+				float leftAmount = emoState.CognitivGetCurrentActionPower() * 0.1f;
 				Ray lookAtRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+				
 				GameObject gObj = GameState.Instance.getSelectedObject();
 				if (gObj != null) {
-					gObj.rigidbody.AddForce(lookAtRay.direction * pushAmount, ForceMode.Impulse);
+					Vector3 position = new Vector3(gObj.transform.localPosition.x - leftAmount, gObj.transform.localPosition.y, gObj.transform.localPosition.z);
+					gObj.transform.localPosition = position;
 				}
-				
 			} 
 		} else {
 			if (Input.GetKeyUp("p")) {

@@ -6,8 +6,7 @@ public class Disappear : MonoBehaviour {
 	
 	
 	public float sensitivity = 0.03f;
-	
-	private static float modifier = 0.1f;
+	public float modifier = 0.1f;
 	
 	private bool disappear = false;
 	//private float currentTime;
@@ -25,7 +24,7 @@ public class Disappear : MonoBehaviour {
 		
 		GameObject gObj = GameState.Instance.getSelectedObject();
 				
-		if (gObj = null) return;
+		if (gObj == null) return;
 		
 		if (!disappear && emoState.CognitivGetCurrentAction() == EdkDll.EE_CognitivAction_t.COG_DISAPPEAR)
 		{
