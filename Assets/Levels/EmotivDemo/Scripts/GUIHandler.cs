@@ -2,10 +2,12 @@ using UnityEngine;
 using System.Collections;
 
 public class GUIHandler : MonoBehaviour {
+	
 
 	// Use this for initialization
 	void Start () {
-	
+		GameEventManager.PauseEvent += pauseGame;
+		GameEventManager.UnpauseEvent += unpauseGame;
 	}
 	
 	// Update is called once per frame
@@ -35,5 +37,19 @@ public class GUIHandler : MonoBehaviour {
 			GUI.Label(new Rect(Screen.width - 35, 0, 60, 20), "none");
 		}
 
+	}
+	
+	void pauseGame() {
+		Time.timeScale = 0;
+		GameState.Instance.setPaused(true);
+		//Screen.lockCursor = false;
+		//Screen.showCursor = true;
+	}
+	
+	void unpauseGame() {
+		Time.timeScale = 1;
+		GameState.Instance.setPaused(false);
+		//Screen.lockCursor = true;
+		//Screen.showCursor = false;
 	}
 }

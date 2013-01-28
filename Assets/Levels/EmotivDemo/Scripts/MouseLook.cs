@@ -32,7 +32,7 @@ public class MouseLook : MonoBehaviour {
 
 	void Update ()
 	{
-		//if (GameState.Instance.isPaused()) return;
+		if (GameState.Instance.isPaused()) return;
 		
 		if (axes == RotationAxes.MouseXAndY)
 		{
@@ -54,6 +54,9 @@ public class MouseLook : MonoBehaviour {
 			
 			transform.localEulerAngles = new Vector3(-rotationY, transform.localEulerAngles.y, 0);
 		}
+		
+		
+		
 	}
 	
 	void Start ()

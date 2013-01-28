@@ -2,24 +2,24 @@ using UnityEngine;
 using System.Collections;
 
 public class InputHandler : MonoBehaviour {
-
+	
+	private GameObject parent;
+	
 	// Use this for initialization
 	void Start () {
-	
+		parent = this.gameObject;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyUp("g")) {
+		
+		if (Input.GetKeyDown("escape")) {
 			if (!GameState.Instance.isPaused()) {
-				Time.timeScale = 0;
-				GameState.Instance.setPaused(true);
-				Screen.showCursor = true;
+				GameEventManager.TriggerPause();
 			} else {
-				Time.timeScale = 1;
-				GameState.Instance.setPaused(false);
-				Screen.showCursor = false;
+				GameEventManager.TriggerUnpause();
 			}
+			
 		}
 	}
 }
