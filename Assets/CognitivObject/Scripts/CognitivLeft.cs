@@ -20,23 +20,21 @@ public class CognitivLeft : MonoBehaviour {
 			if ( emoState != null && emoState.CognitivGetCurrentAction() == EdkDll.EE_CognitivAction_t.COG_PUSH)
 			{
 				// Handle lift
-				float leftAmount = emoState.CognitivGetCurrentActionPower() * 0.1f;
-				Ray lookAtRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+				float leftAmount = emoState.CognitivGetCurrentActionPower() * modifier;
 				
 				GameObject gObj = GameState.Instance.getSelectedObject();
 				if (gObj != null) {
-					Vector3 position = new Vector3(gObj.transform.localPosition.x - leftAmount, gObj.transform.localPosition.y, gObj.transform.localPosition.z);
-					gObj.transform.localPosition = position;
+					gObj.transform.Translate(Vector3.left * leftAmount, Camera.main.transform);
 				}
 			} 
 		} else {
 			if (Input.GetKeyUp(debugKey)) {
 				
-				float pushAmount = incomingPower * modifier;
-				Ray lookAtRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+				float leftAmount = incomingPower * modifier;
 				GameObject gObj = GameState.Instance.getSelectedObject();
+				
 				if (gObj != null) {
-					gObj.rigidbody.AddForce(lookAtRay.direction * pushAmount, ForceMode.Impulse);
+					gObj.transform.Translate(Vector3.left * leftAmount, Camera.main.transform);
 				}
 				
 			}
