@@ -6,7 +6,7 @@ public class CognitivPush : MonoBehaviour {
 	
 	public float incomingPower = 0.0f;
 	public float modifier = 0.1f;
-	
+	public string debugKey;
 	
 	// Use this for initialization
 	void Start () {
@@ -30,7 +30,7 @@ public class CognitivPush : MonoBehaviour {
 				
 			} 
 		} else {
-			if (Input.GetKeyUp("p")) {
+			if (Input.GetKeyUp(debugKey)) {
 				
 				float pushAmount = incomingPower * modifier;
 				Ray lookAtRay = Camera.main.ScreenPointToRay(Input.mousePosition);

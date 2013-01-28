@@ -3,11 +3,14 @@ using System.Collections;
 
 public class GUIHandler : MonoBehaviour {
 	
+	public GUIText pausedText;
 
 	// Use this for initialization
 	void Start () {
 		GameEventManager.PauseEvent += pauseGame;
 		GameEventManager.UnpauseEvent += unpauseGame;
+		
+		pausedText.enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -42,6 +45,7 @@ public class GUIHandler : MonoBehaviour {
 	void pauseGame() {
 		Time.timeScale = 0;
 		GameState.Instance.setPaused(true);
+		pausedText.enabled = true;
 		//Screen.lockCursor = false;
 		//Screen.showCursor = true;
 	}
@@ -49,6 +53,7 @@ public class GUIHandler : MonoBehaviour {
 	void unpauseGame() {
 		Time.timeScale = 1;
 		GameState.Instance.setPaused(false);
+		pausedText.enabled = false;
 		//Screen.lockCursor = true;
 		//Screen.showCursor = false;
 	}

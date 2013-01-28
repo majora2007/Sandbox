@@ -3,11 +3,18 @@ using System.Collections;
 
 public class InputHandler : MonoBehaviour {
 	
-	private GameObject parent;
+	public string cognitivLiftKey;
+	public string cogntivPushKey;
+	public string cognitivDisappearKey;
+	public string cognitivLeftKey;
+	
+	//private GameObject parent;
+	
 	
 	// Use this for initialization
 	void Start () {
-		parent = this.gameObject;
+		//parent = this.gameObject;
+		
 	}
 	
 	// Update is called once per frame

@@ -3,7 +3,7 @@ using Emotiv;
 using System.Collections;
 using System.Collections.Generic;
 
-//[AddComponentMenu("Camera-Control/Mouse Look")]
+
 public class EmotivHandler : MonoBehaviour {
 	
 	private static EmotivHandler instance;
