@@ -8,11 +8,11 @@ public class EmotivHandler : MonoBehaviour {
 	
 	private static EmotivHandler instance;
 	
-	private EmoEngine engine; // Access to the EDK is viaa the EmoEngine 
-    private int userID = -1; // userID is used to uniquely identify a user's headset
+	protected EmoEngine engine; // Access to the EDK is viaa the EmoEngine 
+    private uint userID; // userID is used to uniquely identify a user's headset
 	private Profile profile;
-	private EmoState cogState = null;
 	
+	private EmoState cogState = null;
 	private Dictionary<EdkDll.EE_DataChannel_t, double[]> data;
 	
 	
@@ -41,12 +41,8 @@ public class EmotivHandler : MonoBehaviour {
 		
 		// Handle any waiting events
         engine.ProcessEvents();
-		
-		// If the user has not yet connected, do not proceed
-        if ((int)userID == -1)
-            return;
-		
-		data = engine.GetData((uint) userID);
+
+		data = engine.GetData(userID);
 
 
         if (data == null)
@@ -66,8 +62,13 @@ public class EmotivHandler : MonoBehaviour {
 	
 	}
 	
-	public EmoEngine getEngineInstance() {
-		return this.engine;
+	public uint getActiveUser() {
+		return (userID);
+	}
+	
+	public static EmoEngine getEmoEngine() {
+		if (instance.engine == null) return EmoEngine.Instance;
+		else return instance.engine;
 	}
 	
 	public void connect() {
@@ -83,7 +84,10 @@ public class EmotivHandler : MonoBehaviour {
 	}
 	
 	public void disconnect() {
-		engine.Disconnect();
+		try {
+			engine.Disconnect();
+		} catch {}
+		
 		engine = null;
 	}
 	
@@ -101,9 +105,13 @@ public class EmotivHandler : MonoBehaviour {
 	
 	void engine_EmoEngineConnected(object sender, EmoEngineEventArgs e) {
 		
-		Debug.Log("Engine Connected!");
-		userID = (int) e.userId;
+		Debug.Log("EmoEngine Connected!");
+		userID = e.userId;
 		engine.LoadUserProfile(0, "C:/Users/jvmilazz/Desktop/Joseph.emu"); 
+		userID = 0;
+		engine.DataAcquisitionEnable(userID, true);
+		engine.EE_DataSetBufferSizeInSec(1.0f); 
+		Debug.Log ("User ID: " + userID);
 	}
 	
 	void engine_userAdded_event(object sender, EmoEngineEventArgs e) {
@@ -111,13 +119,13 @@ public class EmotivHandler : MonoBehaviour {
 
 		/*
 		// enable data aquisition for this user
-		engine.DataAcquisitionEnable((uint) userID, true);
+		engine.DataAcquisitionEnable(userID, true);
 		
 		// ask for up to 1 second of buffered data
-        engine.EE_DataSetBufferSizeInSec(0.5f); 
+        engine.EE_DataSetBufferSizeInSec(1.0f); 
 		
 		// I don't need to do profile handling myself.
-		profile = EmoEngine.Instance.GetUserProfile(0);
+		profile = EmoEngine.Instance.GetUserProfile(userID);
         profile.GetBytes();*/
 		
 	}
