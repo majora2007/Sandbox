@@ -17,28 +17,24 @@ public class CognitivRight : MonoBehaviour {
 		if (EmotivHandler.Instance.isConnected()) {
 			EmoState emoState = EmotivHandler.Instance.getCognitiveState();
 		
-			if ( emoState != null && emoState.CognitivGetCurrentAction() == EdkDll.EE_CognitivAction_t.COG_PUSH)
+			if ( emoState != null && emoState.CognitivGetCurrentAction() == EdkDll.EE_CognitivAction_t.COG_RIGHT)
 			{
-				// Handle lift
-				float amount = emoState.CognitivGetCurrentActionPower() * modifier;
-				
-				GameObject gObj = GameState.Instance.getSelectedObject();
-				if (gObj != null) {
-					gObj.transform.Translate(Vector3.left * amount, Camera.main.transform);
-				}
+				translateRight(emoState.CognitivGetCurrentActionPower() * modifier);
 			} 
 		} else {
 			if (Input.GetKeyUp(debugKey)) {
 				
-				float amount = incomingPower * modifier;
-				GameObject gObj = GameState.Instance.getSelectedObject();
-				
-				if (gObj != null) {
-					gObj.transform.Translate(Vector3.right * amount, Camera.main.transform);
-				}
-				
+				translateRight(incomingPower * modifier);
 			}
 		}
 	
+	}
+	
+	private void translateRight(float amount) {
+		GameObject gObj = GameState.Instance.getSelectedObject();
+				
+		if (gObj != null) {
+			gObj.transform.Translate(Vector3.right * amount, Camera.main.transform);
+		}
 	}
 }

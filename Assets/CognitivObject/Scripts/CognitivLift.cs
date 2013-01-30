@@ -19,26 +19,21 @@ public class CognitivLift : MonoBehaviour {
 		
 			if ( emoState != null && emoState.CognitivGetCurrentAction() == EdkDll.EE_CognitivAction_t.COG_LIFT)
 			{
-				GameObject gObj = GameState.Instance.getSelectedObject();
-				
-				if (gObj != null) {
-					float liftAmount = emoState.CognitivGetCurrentActionPower() * modifier;
-					gObj.transform.Translate(Vector3.up * liftAmount);
-				}
-				
+				lift(emoState.CognitivGetCurrentActionPower() * modifier);
 			} 
 		} else {
 			if (Input.GetKeyUp(liftKey)) {
-				GameObject gObj = GameState.Instance.getSelectedObject();
-				
-				if (gObj != null) {
-					float liftAmount = incomingPower * modifier;
-					
-					gObj.transform.Translate(Vector3.up * liftAmount);
-					
-				}
+				lift(incomingPower * modifier);
 			}
 		}
 		
+	}
+	
+	void lift(float amount) {
+		GameObject gObj = GameState.Instance.getSelectedObject();
+		
+		if (gObj != null) {
+			gObj.transform.Translate(Vector3.up * amount);
+		}
 	}
 }

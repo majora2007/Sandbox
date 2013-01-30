@@ -17,28 +17,25 @@ public class CognitivLeft : MonoBehaviour {
 		if (EmotivHandler.Instance.isConnected()) {
 			EmoState emoState = EmotivHandler.Instance.getCognitiveState();
 		
-			if ( emoState != null && emoState.CognitivGetCurrentAction() == EdkDll.EE_CognitivAction_t.COG_PUSH)
+			if ( emoState != null && emoState.CognitivGetCurrentAction() == EdkDll.EE_CognitivAction_t.COG_LEFT)
 			{
-				// Handle lift
-				float leftAmount = emoState.CognitivGetCurrentActionPower() * modifier;
-				
-				GameObject gObj = GameState.Instance.getSelectedObject();
-				if (gObj != null) {
-					gObj.transform.Translate(Vector3.left * leftAmount, Camera.main.transform);
-				}
+				translateLeft(emoState.CognitivGetCurrentActionPower() * modifier);
 			} 
 		} else {
 			if (Input.GetKeyUp(debugKey)) {
 				
-				float leftAmount = incomingPower * modifier;
-				GameObject gObj = GameState.Instance.getSelectedObject();
-				
-				if (gObj != null) {
-					gObj.transform.Translate(Vector3.left * leftAmount, Camera.main.transform);
-				}
+				translateLeft(incomingPower * modifier);
 				
 			}
 		}
 	
+	}
+	
+	private void translateLeft(float amount) {
+		GameObject gObj = GameState.Instance.getSelectedObject();
+				
+		if (gObj != null) {
+			gObj.transform.Translate(Vector3.left * amount, Camera.main.transform);
+		}
 	}
 }

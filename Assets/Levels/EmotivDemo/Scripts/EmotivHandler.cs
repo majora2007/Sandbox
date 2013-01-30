@@ -66,6 +66,10 @@ public class EmotivHandler : MonoBehaviour {
 	
 	}
 	
+	public EmoEngine getEngineInstance() {
+		return this.engine;
+	}
+	
 	public void connect() {
 		engine = EmoEngine.Instance;
 		

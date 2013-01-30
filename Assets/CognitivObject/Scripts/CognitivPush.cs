@@ -8,6 +8,8 @@ public class CognitivPush : MonoBehaviour {
 	public float modifier = 0.1f;
 	public string debugKey;
 	
+	private Ray lookAtRay;
+	
 	// Use this for initialization
 	void Start () {
 	
@@ -18,29 +20,23 @@ public class CognitivPush : MonoBehaviour {
 		if (EmotivHandler.Instance.isConnected()) {
 			EmoState emoState = EmotivHandler.Instance.getCognitiveState();
 		
-			if ( emoState != null && emoState.CognitivGetCurrentAction() == EdkDll.EE_CognitivAction_t.COG_PUSH)
-			{
-				// Handle lift
-				float pushAmount = emoState.CognitivGetCurrentActionPower() * modifier;
-				Ray lookAtRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-				GameObject gObj = GameState.Instance.getSelectedObject();
-				if (gObj != null && gObj.rigidbody != null) {
-					gObj.rigidbody.AddForce(lookAtRay.direction * pushAmount, ForceMode.Impulse);
-				}
-				
+			if ( emoState != null && emoState.CognitivGetCurrentAction() == EdkDll.EE_CognitivAction_t.COG_PUSH) {
+				push(emoState.CognitivGetCurrentActionPower() * modifier);
 			} 
 		} else {
 			if (Input.GetKeyUp(debugKey)) {
-				
-				float pushAmount = incomingPower * modifier;
-				Ray lookAtRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-				GameObject gObj = GameState.Instance.getSelectedObject();
-				if (gObj != null && gObj.rigidbody != null) {
-					gObj.rigidbody.AddForce(lookAtRay.direction * pushAmount, ForceMode.Impulse);
-				}
-				
+				push(incomingPower * modifier);
 			}
 		}
 	
+	}
+	
+	private void push(float amount) {
+		lookAtRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+		GameObject gObj = GameState.Instance.getSelectedObject();
+		
+		if (gObj != null && gObj.rigidbody != null) {
+			gObj.rigidbody.AddForce(lookAtRay.direction * amount, ForceMode.Impulse);
+		}
 	}
 }

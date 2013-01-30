@@ -6,10 +6,10 @@ public class CognitivDisappear : MonoBehaviour {
 	
 	public float incomingPower = 0.0f;
 	public float modifier = 0.1f;
+	public string debugKey;
 	
 	private bool disappear = false;
-
-	public string debugKey;
+	
 	
 
 	void Update () {
@@ -53,7 +53,7 @@ public class CognitivDisappear : MonoBehaviour {
 		Color invisiColor = gObj.transform.renderer.material.color;
 		
 		float valueToBeLerped = amount * modifier;
-		Debug.Log("Value to be Lerped: " + valueToBeLerped);
+		//Debug.Log("Value to be Lerped: " + valueToBeLerped);
 		
 		float decrementAmt = Mathf.Lerp(1.0f, 0.0f, valueToBeLerped);
 		
