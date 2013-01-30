@@ -8,6 +8,8 @@ public class GameState {
 	
 	private bool paused = false;
 	private GameObject selectedObject;
+	private Player currentPlayer;
+	
 	
 	static GameState() {}
 	private GameState() {}
@@ -18,11 +20,11 @@ public class GameState {
 		{
 			if (instance == null) {
 				
-				//lock (_lock) {
-					//if (instance == null) {
+				lock (_lock) {
+					if (instance == null) {
 						instance = new GameState();
-					//}
-				//}
+					}
+				}
 			}
 			
 			return instance;
@@ -45,6 +47,13 @@ public class GameState {
 		selectedObject = selected;
 	}
 	
+	public Player getCurrentPlayer() {
+		return currentPlayer;
+	}
+	
+	public void setCurrentPlayer(Player player) {
+		currentPlayer = player;
+	}
 	
 	
 }

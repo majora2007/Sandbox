@@ -7,14 +7,11 @@ public class InputHandler : MonoBehaviour {
 	public string cogntivPushKey;
 	public string cognitivDisappearKey;
 	public string cognitivLeftKey;
-	
-	//private GameObject parent;
+	//public string playerProfileKey;
 	
 	
 	// Use this for initialization
 	void Start () {
-		//parent = this.gameObject;
-		
 	}
 	
 	// Update is called once per frame
