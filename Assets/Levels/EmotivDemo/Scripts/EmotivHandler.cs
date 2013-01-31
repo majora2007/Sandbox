@@ -15,6 +15,9 @@ public class EmotivHandler : MonoBehaviour {
 	private EmoState cogState = null;
 	private Dictionary<EdkDll.EE_DataChannel_t, double[]> data;
 	
+	private static float bufferSize = 1.0f;
+
+    private float elapsedTime = 0;
 	
 	public static EmotivHandler Instance
 	{
@@ -41,25 +44,16 @@ public class EmotivHandler : MonoBehaviour {
 		
 		// Handle any waiting events
         engine.ProcessEvents();
-
-		data = engine.GetData(userID);
-
-
-        if (data == null)
-        {
-            return;
-        }
-
-        /*int _bufferSize = data[EdkDll.EE_DataChannel_t.TIMESTAMP].Length; // 4
-		Debug.Log ("Buffer Size: " + _bufferSize);
 		
-		for (int i = 0; i < _bufferSize; i++)
+		// This should be called every second...
+        elapsedTime += Time.deltaTime;
+        if (elapsedTime > bufferSize)
         {
-            // Extract Gyroscope data (channels 17 and 18)
+            data = engine.GetData(userID);
+            elapsedTime = 0;
 
-            Debug.Log(data[EdkDll.EE_DataChannel_t.GYROX][i] + ", " + data[EdkDll.EE_DataChannel_t.GYROY][i]);
-        }*/
-	
+            if (data == null) return;
+        }
 	}
 	
 	public uint getActiveUser() {
@@ -102,6 +96,7 @@ public class EmotivHandler : MonoBehaviour {
 	public bool isConnected() {
 		return (engine != null && engine.EngineGetNumUser() > 0);
 	}
+
 	
 	void engine_EmoEngineConnected(object sender, EmoEngineEventArgs e) {
 		
@@ -110,7 +105,7 @@ public class EmotivHandler : MonoBehaviour {
 		engine.LoadUserProfile(0, "C:/Users/jvmilazz/Desktop/Joseph.emu"); 
 		userID = 0;
 		engine.DataAcquisitionEnable(userID, true);
-		engine.EE_DataSetBufferSizeInSec(1.0f); 
+		engine.EE_DataSetBufferSizeInSec(bufferSize); 
 		Debug.Log ("User ID: " + userID);
 	}
 	
@@ -134,7 +129,7 @@ public class EmotivHandler : MonoBehaviour {
 		
 		EmoState emoState = args.emoState; 
 		
-		Debug.Log("User has lower face expression : " + emoState.ExpressivGetLowerFaceAction().ToString() + " of strength " + emoState.ExpressivGetLowerFaceActionPower().ToString() ); 	
+		//Debug.Log("User has lower face expression : " + emoState.ExpressivGetLowerFaceAction().ToString() + " of strength " + emoState.ExpressivGetLowerFaceActionPower().ToString() ); 	
 
 		
 	}
@@ -143,7 +138,7 @@ public class EmotivHandler : MonoBehaviour {
 		cogState = args.emoState;
 		EmoState emoState = args.emoState;
 	
-		Debug.Log("User has cognitive action : " + emoState.CognitivGetCurrentAction().ToString() + " of strength " + emoState.CognitivGetCurrentActionPower().ToString() ); 		
+		//Debug.Log("User has cognitive action : " + emoState.CognitivGetCurrentAction().ToString() + " of strength " + emoState.CognitivGetCurrentActionPower().ToString() ); 		
 	}
 	
 	public EmoState getCognitiveState() {

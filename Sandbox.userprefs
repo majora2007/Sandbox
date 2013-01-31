@@ -1,15 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\CognitivObject\Scripts\CognitivLift.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Levels\EmotivDemo\Scripts\PlayerRules.cs">
     <Files>
-      <File FileName="Assets\Levels\EmotivDemo\Scripts\EmotivHandler.cs" Line="16" Column="29" />
-      <File FileName="Assets\Levels\EmotivDemo\Scripts\GUIHandler.cs" Line="1" Column="1" />
+      <File FileName="Assets\Levels\EmotivDemo\Scripts\GyroLook.cs" Line="1" Column="1" />
       <File FileName="Assets\Levels\EmotivDemo\Scripts\GameEventManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Levels\EmotivDemo\Scripts\InputHandler.cs" Line="1" Column="1" />
-      <File FileName="Assets\CognitivObject\Scripts\CognitivLeft.cs" Line="1" Column="1" />
-      <File FileName="Assets\CognitivObject\Scripts\CognitivPush.cs" Line="5" Column="14" />
-      <File FileName="Assets\CognitivObject\Scripts\CognitivDisappear.cs" Line="9" Column="2" />
-      <File FileName="Assets\CognitivObject\Scripts\CognitivLift.cs" Line="7" Column="36" />
+      <File FileName="Assets\Levels\EmotivDemo\Scripts\GameState.cs" Line="1" Column="1" />
+      <File FileName="Assets\Levels\EmotivDemo\Scripts\EmotivHandler.cs" Line="1" Column="1" />
+      <File FileName="Assets\Levels\EmotivDemo\Scripts\Player\Player.cs" Line="1" Column="1" />
+      <File FileName="Assets\Levels\EmotivDemo\Scripts\GUI\FrequencyViewer.cs" Line="19" Column="3" />
+      <File FileName="Assets\Levels\EmotivDemo\Scripts\PlayerRules.cs" Line="22" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

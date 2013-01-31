@@ -48,6 +48,8 @@ public class Selector : MonoBehaviour {
 					selectedMaterials[selectedMaterials.Length - 1] = highlightMaterial;
 					selectedObject.renderer.materials = selectedMaterials;
 				}
+			} else {
+				// Deselect?
 			}
 		}
 	}

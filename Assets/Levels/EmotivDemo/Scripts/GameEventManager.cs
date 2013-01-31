@@ -4,7 +4,7 @@ using System.Collections;
 public static class GameEventManager {
 	
 	public delegate void GameEvent();
-	public static event GameEvent GameStartEvent, GameOverEvent, PauseEvent, UnpauseEvent;
+	public static event GameEvent GameStartEvent, GameOverEvent, PauseEvent, UnpauseEvent, DebugModeEvent;
 
 	public static void TriggerGameStart() {
 		if (GameStartEvent != null) {
@@ -27,6 +27,12 @@ public static class GameEventManager {
 	public static void TriggerUnpause() {
 		if (UnpauseEvent != null) {
 			UnpauseEvent();
+		}
+	}
+	
+	public static void TriggerDebugModeEvent() {
+		if (DebugModeEvent != null) {
+			DebugModeEvent();
 		}
 	}
 }
